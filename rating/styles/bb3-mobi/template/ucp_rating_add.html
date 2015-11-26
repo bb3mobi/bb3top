@@ -1,0 +1,23 @@
+<!-- INCLUDE ucp_header.html -->
+<h2>{L_UCP_RATING_ADD}</h2>
+<p>{L_UCP_RATING_ADD_EXPLAIN}</p>
+<form id="ucp" method="post" action="{S_UCP_ACTION}">
+<div class="bg3">
+<div class="header">{L_TOP_DETAILS}</div>
+	<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+	<div class="post bg1">{L_TOP_URL}{L_COLON}<br />{L_TOP_URL_EXPLAIN}<br />
+		<input name="top_url" type="text" id="top_url" value="{TOP_URL}" class="inputbox" /></div>
+	<div class="post bg1">{L_RATING_CAT_SELECT}{L_COLON}<br />
+		<select name="cat_id">{TOP_CATS}</select></div>
+	<div class="post bg1">{L_TOP_NAME}{L_COLON}<br />{L_TOP_NAME_EXPLAIN}<br />
+		<input name="top_name" type="text" id="top_name" value="{TOP_NAME}" class="inputbox" /></div>
+	<div class="post bg1">{L_TOP_DESC}{L_COLON}<br />{L_TOP_DESC_EXPLAIN}<br />
+		<textarea id="top_desc" name="top_desc" rows="4" cols="25" class="inputbox">{TOP_DESC}</textarea></div>
+</div>
+<div class="panel submit-buttons">
+	{S_HIDDEN_FIELDS}
+	<input class="button1" type="submit" name="submit" value="{L_SUBMIT}" />
+	{S_FORM_TOKEN}
+</div>
+</form>
+<!-- INCLUDE ucp_footer.html -->

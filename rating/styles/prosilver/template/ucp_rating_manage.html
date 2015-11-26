@@ -1,0 +1,46 @@
+<!-- INCLUDE ucp_header.html -->
+<h2>{L_UCP_RATING_MAIN}</h2>
+
+<div class="panel">
+	<div class="inner">
+	<p>{L_UCP_RATING_MAIN_EXPLAIN}</p>
+
+	<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+	<h3>{L_TOP_DETAILS}</h3>
+
+	<!-- IF .toprow -->
+
+	<div class="forabg">
+		<!-- BEGIN toprow -->
+		<div class="<!-- IF toprow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+			<div class="inner">
+				<a href="{toprow.TOP_URL}" class="rowbg topictitle ellipsis-text">{toprow.TOP_NAME}</a>
+				<div class="rowbg right-box">
+					<!-- IF toprow.S_COUNT_CODE -->
+					<a href="{toprow.U_COUNT_CODE}" class="button icon-button responsive-menu-link"><span>{L_TOP_COUNT_CODE}</span></a>
+					<!-- ENDIF -->
+					<a href="{toprow.U_EDIT_COUNT}" class="button icon-button tools-icon"><span>{L_TOP_COUNT_EDIT}</span></a>
+					<a href="{toprow.U_DEL_PLATFORM}" class="button icon-button delete-icon" title="{L_DEL_PLATFORM}"><span>{L_DELETE}</span></a>
+					<!-- IF toprow.S_TOP_TYPE != 1 -->
+						<!-- IF toprow.S_TOP_TYPE == 0 -->
+						<a href="{toprow.U_CLOSED_STATS}" class="button"><span>{L_TOP_STATS_DISABLE}</span></a>
+						<!-- ELSE -->
+						<a href="{toprow.U_OPEN_STATS}" class="button"><span>{L_TOP_STATS_ENABLE}</span></a>
+						<!-- ENDIF -->
+					<!-- ENDIF -->
+				</div>
+			</div>
+		</div>
+		<!-- END toprow -->
+	</div>
+
+	<!-- ELSE -->
+
+	<strong>{L_PLATFORM_NOT}</strong>
+
+	<!-- ENDIF -->
+
+	</div>
+</div>
+
+<!-- INCLUDE ucp_footer.html -->

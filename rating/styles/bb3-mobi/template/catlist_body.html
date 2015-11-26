@@ -1,0 +1,22 @@
+<!-- BEGIN cat -->
+<!-- IF .cat.catrow -->
+<div class="forabg">
+	<div class="inner">
+	<div class="header"><!-- IF cat.S_FIRST_ROW --><a href="{U_RATING}">{L_RATING_TOP}</a>| <!-- ENDIF -->{cat.CAT_NAME}</div>
+	<!-- BEGIN catrow -->
+	<div class="row">
+		<a href="{cat.catrow.U_VIEWCAT}" class="forumtitle">{cat.catrow.CAT_TITLE}</a>
+		[{cat.catrow.CAT_SITE}<!-- IF cat.catrow.CAT_NEW --><span class="error">+{cat.catrow.CAT_NEW}</span><!-- ENDIF -->]
+		<br />{cat.catrow.CAT_DESC}
+	</div>
+	<!-- END catrow -->
+	</div>
+</div>
+<!-- ELSEIF not cat.CAT_TYPE -->
+<div class="panel">
+	<div class="inner">
+	<b>{L_RATING_NOT_CATEGORIES}</b>
+	</div>
+</div>
+<!-- ENDIF -->
+<!-- END cat -->

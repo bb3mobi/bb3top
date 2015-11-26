@@ -1,0 +1,26 @@
+{
+    "name": "bb3top/screen",
+    "type": "phpbb-extension",
+    "description": "BB3 TOP Screen Site",
+    "homepage": "http://bb3.mobi",
+    "version": "1.0.0",
+    "time": "2015-07-13",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "email": "anvar.all@mail.ru",
+            "homepage": "http://apwa.ru",
+            "role": "phpBB Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "[BB3 TOP] Screen",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}

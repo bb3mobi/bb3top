@@ -1,0 +1,38 @@
+<!-- INCLUDE ucp_header.html -->
+<h2>{L_UCP_RATING_MAIN}</h2>
+<p>{L_UCP_RATING_MAIN_EXPLAIN}</p>
+
+<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+
+<!-- IF S_ADD_PLATFORM -->
+<div class="action-bar">
+	<a href="{U_ADD_PLATFORM}" class="button">{L_ADD_PLATFORM}</a>
+</div>
+<!-- ENDIF -->
+
+<!-- IF .toprow -->
+<div class="forumbg">
+<div class="inner">
+	<div class="header">{L_TOP_DETAILS}</div>
+
+	<!-- BEGIN toprow -->
+	<div class="row<!-- IF toprow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+		<div class="inner">
+			<a href="{toprow.TOP_URL}" class="topictitle">{toprow.TOP_NAME}</a>
+			<a href="{toprow.TOP_STATS}" class="rightside button"><img src="{T_THEME_PATH}/images/icon_topic_poll.gif" alt=""/></a>
+			<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+		</div>
+		{L_TOP_HOSTS}{L_COLON} {toprow.TOP_HOSTS} | {L_TOP_HITS}{L_COLON} {toprow.TOP_HITS} | {L_TOP_IN}{L_COLON} {toprow.TOP_IN} | {L_TOP_OUT}{L_COLON} {toprow.TOP_OUT}
+	</div>
+	<!-- END toprow -->
+
+	<!-- ELSE -->
+
+	<p>{L_PLATFORM_NOT}</p>
+
+	<!-- ENDIF -->
+
+	</div>
+</div>
+
+<!-- INCLUDE ucp_footer.html -->

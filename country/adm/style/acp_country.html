@@ -1,0 +1,92 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1><!-- IF S_IP_VIEW -->{PROV_COUNTRY} - {PROV_NAME}<!-- ELSE -->{L_ACP_COUNTRY_SETTINGS}<!-- ENDIF --></h1>
+<p>{L_ACP_COUNTRY_MANAGE}</p>
+
+<!-- IF .country -->
+<table class="table1 forums" cellspacing="1">
+<col class="row1" /><col class="row1" /><col class="row2" />
+<thead>
+	<tr>
+		<th class="row3">{L_ACP_COUNTRY_LANG}</td>
+		<th class="row3">{L_ACP_COUNTRY_NAME}</td>
+		<!-- IF S_PROV_VIEW --><th class="row3">{L_ACP_COUNTRY_PROVIDER}</th><!-- ENDIF -->
+		<th class="row3"></td>
+	</tr>
+</thead>
+<tbody>
+	<!-- BEGIN country -->
+	<tr>
+		<td class="folder">{country.PROV_LANG}</td>
+		<td>
+			<strong><a href="{country.U_PROV_VIEW}">{country.PROV_COUNTRY}</a></strong>
+		</td>
+		<!-- IF S_PROV_VIEW --><td><a href="{country.U_IP_VIEW}">{country.PROV_NAME}</a></td><!-- ENDIF -->
+		<td class="actions">
+			<a href="{country.U_EDIT}">{ICON_EDIT}</a> 
+			<a href="{country.U_DELETE}">{ICON_DELETE}</a>
+		</td>
+	</tr>
+	<!-- END country -->
+</tbody>
+</table>
+<!-- ENDIF -->
+
+<!-- IF S_IP_VIEW -->
+<form id="module" method="post" action="{U_EDIT_ACTION}">
+<table class="table1 forums" cellspacing="1">
+<col class="row1" /><col class="row1" /><col class="row2" />
+<thead>
+	<tr>
+		<th class="row3">IP START</td>
+		<th class="row3">IP FINISH</td>
+		<th class="row3"></td>
+	</tr>
+</thead>
+<tbody>
+	<!-- BEGIN iprow -->
+	<tr>
+		<td>{iprow.IP_START}</td>
+		<td>{iprow.IP_FINISH}</td>
+		<td class="actions">
+			<a href="{iprow.IP_EDIT}">{ICON_EDIT}</a> 
+			<a href="{iprow.IP_DELETE}">{ICON_DELETE}</a>
+		</td>
+	</tr>
+	<!-- END iprow -->
+	<tr>
+		<td><input type="text" name="ip_start" maxlength="15" value="" /></td>
+		<td><input type="text" name="ip_finish" maxlength="15" value="" /></td>
+		<td class="actions"><input type="submit" name="submit" class="button2" value="{L_ADD}" /></td>
+	</tr>
+	</tbody>
+</table>
+</form>
+<!-- ENDIF -->
+
+<!-- IF not S_IP_VIEW -->
+<form id="module" method="post">
+<table class="table1 forums" cellspacing="1">
+<col class="row1" /><col class="row1" /><col class="row2" />
+	<thead>
+	<tr>
+		<th class="row3">{L_ACP_COUNTRY_LANG}</td>
+		<th class="row3">{L_ACP_COUNTRY_NAME}</td>
+		<th class="row3">{L_ACP_COUNTRY_PROVIDER}</th>
+		<th class="row3"></th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="folder"><input type="text" name="prov_lang_new" maxlength="3" size="3" value="{PROV_LANG}" /></td>
+		<td><input type="text" name="prov_country_new" maxlength="30" value="{PROV_COUNTRY}" /></td>
+		<td><input type="text" name="prov_name_new" maxlength="30" /></td>
+		<td><input type="hidden" name="action" value="add" />
+		<input class="button2" type="submit" value="{L_ADD}" /></td>
+	</tr>
+	</tbody>
+</table>
+</form>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

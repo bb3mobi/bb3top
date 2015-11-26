@@ -1,0 +1,25 @@
+{
+    "name": "bb3top/country",
+    "type": "phpbb-extension",
+    "description": "TOP Country",
+    "homepage": "http://bb3.mobi",
+    "version": "1.0.0",
+    "time": "2015-07-07",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Author extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "[BB3 TOP] Country",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}

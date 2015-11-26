@@ -1,0 +1,25 @@
+{
+    "name": "bb3top/rating",
+    "type": "phpbb-extension",
+    "description": "TOP Rating",
+    "homepage": "http://bb3.mobi",
+    "version": "1.0.1",
+    "time": "2015-03-23",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Author extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": " [BB3 TOP] Rating",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}

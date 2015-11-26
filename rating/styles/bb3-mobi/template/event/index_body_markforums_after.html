@@ -1,0 +1,18 @@
+<!-- BEGIN announcerow -->
+<!-- IF not announcerow.S_TOPIC_TYPE_SWITCH and not announcerow.S_FIRST_ROW -->
+</div>
+<!-- ENDIF -->
+<!-- IF announcerow.S_FIRST_ROW or not announcerow.S_TOPIC_TYPE_SWITCH -->
+<div class="panel bg3">
+<!-- ENDIF -->
+<div class="post<!-- IF announcerow.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+	<div class="inner">
+		<p><a href="{announcerow.TOPIC_URL}" class="topictitle">{announcerow.TOPIC_TITLE}</a></p>
+		<b>{announcerow.TOPIC_TIME}</b>
+		<div class="content">{announcerow.TOPIC_DESC}</div>
+	</div>
+</div>
+<!-- IF announcerow.S_LAST_ROW -->
+</div>
+<!-- ENDIF -->
+<!-- END announcerow -->

@@ -1,0 +1,36 @@
+<!-- IF S_RATING_TYPE and (.announcerow or .catrow) -->
+<!--
+	Rating phpBB 3.1: Anvar Stybaev (http://apwa.ru)
+-->
+<!-- IF .announcerow -->
+<div class="inner">
+<div id="cp-main" class="panel-container">
+<!-- ENDIF -->
+
+	<!-- IF S_RATING_INTEGER == 1 -->
+
+		<!-- INCLUDE toplist_body.html -->
+
+	<!-- ELSEIF S_RATING_INTEGER == 2 -->
+
+		<!-- INCLUDE catlist_body.html -->
+
+	<!-- ENDIF -->
+
+<!-- IF .announcerow -->
+</div>
+<div id="cp-menu">
+	<!-- BEGIN announcerow -->
+	<div class="cp-mini">
+		<div class="inner">
+		<dl class="mini">
+			<dt><a href="{announcerow.TOPIC_URL}" class="topictitle">{announcerow.TOPIC_TITLE}</a></dt>
+			<dd><strong>{announcerow.TOPIC_TIME}</strong><br />{announcerow.TOPIC_DESC}</dd>
+		</dl>
+		</div>
+	</div>
+	<!-- END announcerow -->
+</div>
+</div>
+<!-- ENDIF -->
+<!-- ENDIF -->

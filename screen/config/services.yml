@@ -1,0 +1,9 @@
+services:
+    bb3top.screen.listener:
+        class: bb3top\screen\event\listener
+        arguments:
+            - @config
+            - @template
+            - %core.root_path%
+        tags:
+            - { name: event.listener }

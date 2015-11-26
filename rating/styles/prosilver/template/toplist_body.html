@@ -1,0 +1,74 @@
+<div class="forumbg">
+<div class="inner">
+	<ul class="topiclist missing-column">
+		<li class="header">
+			<dl>
+				<dt>
+					<div class="list-inner">
+					<!-- IF PLATFORM_DETAILS -->{PLATFORM_DETAILS}<!-- ELSE -->{L_RATING_TOP} <!-- IF TOP_COUNT -->{TOP_COUNT}<!-- ELSE -->{L_RATING}<!-- ENDIF --><!-- ENDIF -->
+					<!-- IF S_INDEX or S_BB3_PORTAL --> | <a href="{U_RATING_CAT}">{L_RATING_CATEGORIES}</a> <a href="{U_ADD_PLATFORM}" class="right-box">{L_ADD_PLATFORM}</a><!-- ENDIF -->
+					</div>
+				</dt>
+				<dd class="extra">{L_TOP_ONLINE}</dd>
+				<dd class="extra">{L_TOP_HOSTS}</dd>
+				<dd class="extra">{L_TOP_HITS}</dd>
+				<dd class="mark">{L_STATISTICS}</dd>
+			</dl>
+		</li>
+	</ul>
+	<!-- BEGIN toprow -->
+
+	<!-- IF not toprow.S_TOPIC_TYPE_SWITCH and not toprow.S_FIRST_ROW --></ul><!-- ENDIF -->
+
+	<!-- IF toprow.S_FIRST_ROW or not toprow.S_TOPIC_TYPE_SWITCH -->
+	<ul class="topiclist responsive-show-columns missing-column"><!-- ENDIF -->
+
+	<li class="row <!-- IF toprow.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF toprow.S_TOPIC_REPORTED --> reported<!-- ENDIF -->" id="site{toprow.TOP_ID}">
+		<dl class="icon forum_link">
+			<dt<!-- IF toprow.TOPIC_ICON_IMG and S_TOPIC_ICONS --> style="background-image: url({T_ICONS_PATH}{toprow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF -->>
+				<div class="list-inner">
+					<!-- EVENT bb3top_toprow_topname_prepend -->
+					<a href="{toprow.TOP_URL}" class="topictitle ellipsis-text">{toprow.TOP_NUMBER}. {toprow.TOP_NAME}</a>
+					<!-- IF toprow.S_TOPIC_UNAPPROVED or toprow.S_POSTS_UNAPPROVED -->
+					<a href="{toprow.U_MCP_QUEUE}">{UNAPPROVED_IMG}</a> <!-- ENDIF -->
+					<!-- IF toprow.S_TOPIC_DELETED --><a href="{toprow.U_MCP_QUEUE}">{DELETED_IMG}</a> <!-- ENDIF -->
+					<!-- IF toprow.S_TOPIC_REPORTED --><a href="{toprow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF -->
+					<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+					<div class="right-box"><!-- IF toprow.S_HAS_POLL -->{POLL_IMG} <!-- ENDIF -->
+					<a href="{toprow.U_VIEW_TOPIC}">{L_PLATFORM_COMMENT}{L_COLON} <strong>{toprow.REPLIES}</strong></a></div>
+				</div>
+			</dt>
+			<dd class="extra">{toprow.TOP_ONLINE}</dd>
+			<dd class="extra">{toprow.TOP_HOSTS}</dd>
+			<dd class="extra">{toprow.TOP_HITS}</dd>
+			<dd class="mark"><a href="{toprow.TOP_STATS}" class="button"><span class="imageset icon_topic_poll">{L_STATISTICS}</span></a></dd>
+		</dl>
+	</li>
+
+	<!-- IF toprow.S_LAST_ROW --></ul><!-- ENDIF -->
+
+	<!-- BEGINELSE -->
+	<div class="content bg1">
+		<h2>{L_PLATFORM_NOT}</h2>
+	</div>
+	<!-- END toprow -->
+</div>
+</div>
+<!-- IF TOTAL_PLATFORM or .pagination -->
+<div class="action-bar bottom">
+	<div class="pagination">
+		{TOTAL_PLATFORM}
+		<!-- IF .pagination --> 
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE --> 
+			 &bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+</div>
+<!-- ENDIF -->
+<script type="text/javascript">
+var site = window.location.hash.replace("#", "");
+if (site != '') {
+	document.getElementById(site).className += ' bg3';
+}
+</script>

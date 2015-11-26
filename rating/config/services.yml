@@ -1,0 +1,61 @@
+services:
+    bb3top.rating:
+        class: bb3top\rating\controller\rating
+        arguments:
+            - @template
+            - @config
+            - @user
+            - @request
+            - @controller.helper
+            - @bb3top.rating.core
+            - %core.root_path%
+            - %core.php_ext%
+    bb3top.rating.counter:
+        class: bb3top\rating\controller\counter
+        arguments:
+            - @config
+            - @dbal.conn
+            - @user
+            - @request
+            - @controller.helper
+            - @pagination
+            - %core.table_prefix%
+            - %core.root_path%
+    bb3top.rating.core:
+        class: bb3top\rating\core\rating
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @content.visibility
+            - @dbal.conn
+            - @pagination
+            - @request
+            - @template
+            - @user
+            - @controller.helper
+            - %core.table_prefix%
+            - %core.root_path%
+            - %core.php_ext%
+    bb3top.rating.listener:
+        class: bb3top\rating\event\listener
+        arguments:
+            - @template
+            - @config
+            - @user
+            - @controller.helper
+            - @bb3top.rating.core
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
+    bb3top.rating.cron.task:
+        class: bb3top\rating\cron\task\top_rating
+        arguments:
+            - @config
+            - @dbal.conn
+            - @user
+            - %core.table_prefix%
+        calls:
+            - [set_name, [cron.task.bb3top.top_rating]]
+        tags:
+            - { name: cron.task }

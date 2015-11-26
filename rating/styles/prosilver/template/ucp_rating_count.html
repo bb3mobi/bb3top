@@ -1,0 +1,74 @@
+<!-- INCLUDE ucp_header.html -->
+<h2><!-- IF S_COUNT_CODE -->{L_TOP_COUNT_CODE}<!-- ELSE -->{L_TOP_COUNT_EDIT}<!-- ENDIF --></h2>
+<form id="count" method="post" action="{S_UCP_ACTION}">
+
+<div class="panel">
+	<div class="inner">
+
+	<!-- IF S_COUNT_CODE -->
+
+	<!-- BEGIN counts -->
+	<div class="post <!-- IF counts.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<div class="inner">
+			<dl class="postprofile">
+				<dt><strong>{counts.COUNT_TYPE}</strong><br /><hr /><img src="{counts.IMAGE_URL}" alt="" /></dt>
+				<dd><a href="{U_EDIT_COUNT}">{L_TOP_COUNT_EDIT}</a></dd>
+			</dl>
+			<div class="postbody">
+				<div class="content">
+
+					<div class="codebox">
+					<p>{L_TOP_COUNT_BBCODE}{L_COLON} <a href="#" onclick="selectCode(this); return false;">{L_SELECT_ALL_CODE}</a></p>
+						<code>[url={counts.COUNT_URL}][img]{counts.COUNT_IMG}[/img][/url]</code>
+					</div>
+
+					<div class="codebox">
+					<p>{L_TOP_COUNT_HTML}{L_COLON} <a href="#" onclick="selectCode(this); return false;">{L_SELECT_ALL_CODE}</a></p>
+						<code>&lt;a href="{counts.COUNT_URL}"&gt;&lt;img src="{counts.COUNT_IMG}" alt="{SITENAME}" /&gt;&lt;/a&gt;</code>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- END counts -->
+
+	<!-- ELSE -->
+
+	<p>{L_TOP_COUNT_EXPLAIN}</p>
+	<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+
+	<div id="gallery">
+
+		<!-- BEGIN counts -->
+		<fieldset>
+			<div id="{counts.COUNT_TYPE}">
+			<h3>{counts.COUNT_NAME}</h3>
+				<!-- BEGIN rows -->
+				<label for="{counts.rows.COUNT_ID}"><img src="{counts.rows.COUNT_IMG}" alt="" /><br />
+					<input type="radio" name="{counts.COUNT_TYPE}" id="{counts.rows.COUNT_ID}" value="{counts.rows.COUNT_VALUE}"{counts.rows.COUNT_CHEKED} />
+				</label>
+				<!-- END rows -->
+			</div>
+		</fieldset>
+		<!-- BEGINELSE -->
+		<fieldset><strong>{L_TOP_COUNT_NOT}</strong></fieldset>
+		<!-- END counts -->
+
+		<!-- IF .counts -->
+		<fieldset class="submit-buttons">
+				{S_HIDDEN_FIELDS}
+				<input type="reset" value="{L_RESET}" name="reset" class="button2" /> &nbsp;
+				<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+		</fieldset>
+		<!-- ENDIF -->
+
+	</div>
+
+	<!-- ENDIF -->
+
+	</div>
+</div>
+
+</form>
+<!-- INCLUDE ucp_footer.html -->

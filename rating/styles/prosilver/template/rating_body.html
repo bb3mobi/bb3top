@@ -1,0 +1,64 @@
+<!-- INCLUDE overall_header.html -->
+<!--
+	Rating phpBB 3.1: Anvar Stybaev (http://apwa.ru)
+-->
+<div id="cp-menu">
+
+	<div id="navigation" role="navigation">
+		<!-- IF S_ADD_PLATFORM --><ul><li><a href="{U_ADD_PLATFORM}">{L_ADD_PLATFORM}</a></li></ul><!-- ENDIF -->
+
+		<!-- BEGIN cat -->
+		<!-- IF .cat.catrow -->
+		<div class="cp-mini">
+			<strong>{cat.CAT_NAME}</strong>
+			<ul>
+				<!-- BEGIN catrow -->
+				<li<!-- IF cat.catrow.CAT_ID == CAT_ID --> id="active-subsection"<!-- ENDIF -->><a href="{cat.catrow.U_VIEWCAT}">{cat.catrow.CAT_TITLE}<!-- IF cat.catrow.CAT_SITE --> ({cat.catrow.CAT_SITE}<!-- IF cat.catrow.CAT_NEW -->/<span class="error">+{cat.catrow.CAT_NEW}</span><!-- ENDIF -->)<!-- ENDIF --></a></li>
+				<!-- END catrow -->
+			</ul>
+		</div>
+		<!-- ENDIF -->
+		<!-- END cat -->
+
+	</div>
+
+	<!-- IF DESCRIPTION -->
+	<div class="cp-mini">{DESCRIPTION}</div><!-- ENDIF -->
+
+	<!-- IF .announcerow -->
+	<h3><a href="{U_FOUM_ANNOUNCE}">{L_RATING_ANOUNCE}</a></h3>
+	<!-- BEGIN announcerow -->
+	<div class="cp-mini">
+		<div class="inner">
+		<dl class="mini">
+			<dt><a href="{announcerow.TOPIC_URL}" class="topictitle">{announcerow.TOPIC_TITLE}</a></dt>
+			<dd><strong>{announcerow.TOPIC_TIME}</strong><br />{announcerow.TOPIC_DESC}</dd>
+		</dl>
+		</div>
+	</div>
+	<!-- END announcerow -->
+	<!-- ENDIF -->
+
+	<div class="cp-mini">
+		<strong>{L_RATING_PLATFORMS}</strong>
+		<div>{L_TOP_INALL}{L_COLON} {ALL_SITE_COUNT} / {L_RATING_PLATFORMS_NEW}{L_COLON} {NEW_SITE_COUNT}</div>
+	</div>
+
+</div>
+
+<div id="cp-main" class="panel-container">
+
+	<!-- IF .pagination -->
+	<div class="action-bar top">
+		<div class="pagination">
+			{TOTAL_PLATFORM}
+			<!-- INCLUDE pagination.html -->
+		</div>
+	</div>
+	<!-- ENDIF -->
+	<!-- INCLUDE toplist_body.html -->
+
+</div>
+
+<div class="copyright"><a href="http://bb3.mobi/forum/rating" title="Rating phpBB">BB3 TOP</a> &copy; Anvar 2015</div>
+<!-- INCLUDE overall_footer.html -->

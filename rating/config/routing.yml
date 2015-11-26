@@ -1,0 +1,52 @@
+bb3top_rating_category:
+    path: /category
+    defaults: { _controller: bb3top.rating:category }
+bb3top_rating_cat:
+    path: /cat/{cat_id}
+    defaults: { _controller: bb3top.rating:category }
+    requirements:
+        cat_id: \d+
+bb3top_rating_top:
+    path: /rating
+    defaults: { _controller: bb3top.rating:rating }
+bb3top_rating_in:
+    path: /in/{top_id}
+    defaults: { _controller: bb3top.rating.counter:top_in }
+    requirements:
+        top_id: \d+
+bb3top_rating_out:
+    path: /out/{top_id}
+    defaults: { _controller: bb3top.rating.counter:top_out }
+    requirements:
+        top_id: \d+
+bb3top_rating_counter:
+    path: /{action}/{top_id}
+    defaults: { _controller: bb3top.rating.counter:top_count, action:'' }
+    requirements:
+        action: small|big
+        top_id: \d+
+bb3top_rating_stats:
+    path: /stats/{top_id}
+    defaults: { _controller: bb3top.rating:stats, action:'' }
+    requirements:
+        top_id: \d+
+bb3top_rating_hosts:
+    path: /stats/hosts/{top_id}
+    defaults: { _controller: bb3top.rating:stats, action:'hosts' }
+    requirements:
+        top_id: \d+
+bb3top_rating_online:
+    path: /stats/online/{top_id}
+    defaults: { _controller: bb3top.rating:stats, action:'online' }
+    requirements:
+        top_id: \d+
+bb3top_rating_click:
+    path: /stats/click/{top_id}
+    defaults: { _controller: bb3top.rating:stats, action:'click' }
+    requirements:
+        top_id: \d+
+bb3top_rating_country:
+    path: /stats/country/{top_id}
+    defaults: { _controller: bb3top.rating:stats, action:'country' }
+    requirements:
+        top_id: \d+

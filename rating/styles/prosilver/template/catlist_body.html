@@ -1,0 +1,41 @@
+<!-- BEGIN cat -->
+<!-- IF .cat.catrow -->
+<div class="forabg">
+	<div class="inner">
+	<ul class="topiclist">
+		<li class="header">
+			<dl class="icon">
+				<dt style="margin-right: -190px;">{cat.CAT_NAME}</dt>
+				<dd class="topics">{L_RATING_PLATFORMS}</dd>
+				<dd class="topics">{L_RATING_PLATFORMS_NEW}</dd>
+			</dl>
+		</li>
+	</ul>
+	<ul class="topiclist forums">
+
+	<!-- BEGIN catrow -->
+	<li class="row">
+		<dl class="icon forum_read">
+			<dt style="margin-right: -190px;">
+				<div class="list-inner" style="margin-right: 190px;">
+					<a href="{cat.catrow.U_VIEWCAT}" class="forumtitle">{cat.catrow.CAT_TITLE}</a>
+					<p class="responsive-hide">{cat.catrow.CAT_DESC}</p>
+				</div>
+			</dt>
+			<dd class="topics responsive-show"><dfn>{L_RATING_PLATFORMS}{L_COLON}</dfn> {cat.catrow.CAT_SITE}</dd>
+			<dd class="topics responsive-show"><dfn>{L_RATING_PLATFORMS_NEW}{L_COLON}</dfn> {cat.catrow.CAT_NEW}</dd>
+		</dl>
+	</li>
+	<!-- END catrow -->
+
+	</ul>
+	</div>
+</div>
+<!-- ELSEIF not cat.CAT_TYPE -->
+<div class="panel">
+	<div class="inner">
+	<strong>{L_RATING_NOT_CATEGORIES}</strong>
+	</div>
+</div>
+<!-- ENDIF -->
+<!-- END cat -->

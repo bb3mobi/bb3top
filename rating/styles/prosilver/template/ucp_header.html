@@ -1,0 +1,43 @@
+<!-- INCLUDE overall_header.html -->
+
+<h2 class="ucp-title">{L_PLATFORM_MANAGE}</h2>
+
+<!-- IF S_COMPOSE_PM -->
+<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
+<!-- ENDIF -->
+
+<div class="panel bg3">
+	<div class="inner">
+
+	<div style="width: 100%;">
+
+	<div id="cp-menu">
+		<div id="navigation" role="navigation">
+
+			<ul>
+		<!-- BEGIN t_block2 -->
+			<!-- IF (S_PRIVMSGS and t_block2.S_LAST_ROW) or not S_PRIVMSGS -->
+				<!-- IF t_block2.S_SELECTED -->
+					<li id="active-subsection"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
+				<!-- ELSE -->
+					<li><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
+				<!-- ENDIF -->
+			<!-- ENDIF -->
+		<!-- END t_block2 -->
+			</ul>
+		</div>
+
+		<!-- BEGIN announcerow -->
+		<div class="cp-mini">
+			<div class="inner">
+			<dl class="mini">
+				<dt><a href="{announcerow.TOPIC_URL}" class="topictitle">{announcerow.TOPIC_TITLE}</a></dt>
+				<dd><strong>{announcerow.TOPIC_TIME}</strong><br />{announcerow.TOPIC_DESC}</dd>
+			</dl>
+			</div>
+		</div>
+		<!-- END announcerow -->
+
+	</div>
+
+	<div id="cp-main" class="ucp-main panel-container">

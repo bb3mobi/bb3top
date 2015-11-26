@@ -1,0 +1,50 @@
+<!-- INCLUDE overall_header.html -->
+<form id="changecat" action="{U_EDIT_ACTION}" method="post">
+<!-- IF not S_IP_EDIT and not S_IP_NEW -->
+<h1>{L_ACP_CATEGORY_EDIT}</h1>
+<p>{L_ACP_CATEGORY_EDIT_EXPLAIN}</p>
+<!-- ELSE -->
+<h1>{L_ACP_COUNTRY_IP_SETTINGS}</h1>
+<!-- ENDIF -->
+
+<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+
+<!-- IF S_IP_EDIT or S_IP_NEW -->
+<fieldset>
+<legend><!-- IF S_IP_NEW -->{L_ACP_COUNTRY_IP_NEW}<!-- ELSE -->{L_ACP_COUNTRY_IP_EDIT}<!-- ENDIF --></legend>
+	<dl>
+		<dt><label>IP START{L_COLON}</label></dt>
+		<dd><label><input name="ip_start" type="text" size="15" maxlength="15" value="{IP_START}" /></label></dd>
+	</dl>
+	<dl>
+		<dt><label>IP FINISH{L_COLON}</label></dt>
+		<dd><label><input name="ip_finish" type="text" size="15" maxlength="15" value="{IP_FINISH}" /></label></dd>
+	</dl>
+</fieldset>
+<!-- ELSE -->
+<!-- BEGIN country_edit -->
+<fieldset>
+<legend><!-- IF not S_NEW_ACTION -->{L_ACP_COUNTRY_EDIT} {country_edit.PROV_NAME}<!-- ELSE -->{L_ACP_COUNTRY_ADD}<!-- ENDIF --></legend>
+	<dl>
+		<dt><label>{L_ACP_COUNTRY_NAME}{L_COLON}</label></dt>
+		<dd><label><input name="prov_country_{country_edit.PROV_ID}" type="text" size="30" maxlength="30" value="{country_edit.PROV_COUNTRY}" /></label></dd>
+	</dl>
+	<dl>
+		<dt><label>{L_ACP_COUNTRY_LANG}{L_COLON}</label></dt>
+		<dd><label><input name="prov_lang_{country_edit.PROV_ID}" type="text" size="3" maxlength="3" value="{country_edit.PROV_LANG}" /></label></dd>
+	</dl>
+	<dl>
+		<dt><label>{L_ACP_COUNTRY_PROVIDER}{L_COLON}</label></dt>
+		<dd><label><input name="prov_name_{country_edit.PROV_ID}" type="text" size="20" maxlength="20" value="{country_edit.PROV_NAME}" /></label></dd>
+	</dl>
+</fieldset>
+<!-- END country_edit -->
+<!-- ENDIF -->
+<fieldset class="submit-buttons">
+	<legend>{L_SUBMIT}</legend>
+	<!-- IF S_NEW_ACTION --><input type="hidden" name="action" value="add" /><!-- ENDIF -->
+	<input type="submit" value="{L_SUBMIT}" name="submit" class="button1"/>&nbsp;
+	<input type="submit" value="{L_CANCEL}" name="cancelcat" class="button2"/>
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

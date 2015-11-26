@@ -1,0 +1,129 @@
+<!-- INCLUDE overall_header.html -->
+
+<!-- IF not S_EDIT_COUNT -->
+
+	<h1>{L_ACP_COUNTS}</h1>
+	<p>{L_ACP_COUNTS_EXPLAIN}</p>
+
+	<div id="gallery">
+	<!-- BEGIN counts -->
+	<fieldset>
+		<div id="{counts.COUNT_TYPE}">
+		<legend>{counts.COUNT_NAME}</legend>
+		<ul>
+			<!-- BEGIN rows -->
+			<li><a href="{counts.rows.U_EDIT}"><img src="{counts.rows.COUNT_IMG}" alt="" /></a></li>
+			<!-- END rows -->
+		</ul>
+		</div>
+	</fieldset>
+	<!-- BEGINELSE -->
+	<fieldset><strong>{L_ACP_COUNTS_MSG_NO}</strong></fieldset>
+	<!-- END counts -->
+	</div>
+
+	<form id="count" method="post" action="{U_ACTION}">
+	<fieldset class="quick">
+		<span id="imagepreview"></span>
+		<select name="file" onclick="ipreview(this)">{S_ICON_OPTIONS}</select>
+		{S_CAT_OPTIONS}
+		{S_TYPE_OPTIONS}
+		<input name="submode" type="hidden" value="addcount" />
+		<input class="button2" name="submit" type="submit" value="{L_ACP_ADD_COUNT}" />
+	</fieldset>
+	</form>
+
+<!-- ELSE -->
+
+	<form id="editcount" action="{U_EDIT_ACTION}" method="post">
+	<h1>{L_ACP_COUNT_EDIT}</h1>
+	<p>{L_ACP_COUNT_EDIT_EXPLAIN}</p>
+	<fieldset>
+		<dl>
+			<dt><label for="icon">{L_ACP_COUNT_ICON}{L_COLON}</label><br />{L_ACP_COUNT_ICON_EXPLAIN}</dt>
+			<dd>
+				<select id="icon" name="file" onclick="ipreview(this)">{S_ICON_OPTIONS}</select><br />
+				<span id="imagepreview"><img src="{COUNT_IMG}" alt="" /></span>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_COUNT_CAT}{L_COLON}</label><br />{L_ACP_COUNT_CAT_EXPLAIN}</dt>
+			<dd>{S_CAT_OPTIONS}</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_COUNT_TYPE}{L_COLON}</label><br />{L_ACP_COUNT_TYPE_EXPLAIN}</dt>
+			<dd>{S_TYPE_OPTIONS}</dd>
+		</dl>
+		<dl>
+			<dt><label for="count_colour">{L_ACP_COUNT_COLOR}{L_COLON}</label><br /><span>{L_ACP_COUNT_COLOR_EXPLAIN}</span></dt>
+			<dd>
+				<input name="count_colour" type="text" id="count_colour" value="{COUNT_COLOUR}" size="6" maxlength="6" />
+				<!-- IF COUNT_COLOUR -->&nbsp;<span style="background-color: #{COUNT_COLOUR}">&nbsp; &nbsp;</span><!-- ENDIF -->&nbsp;&nbsp;<span>
+				[ <a href="#" id="color_palette_toggle">{L_COLOUR_SWATCH}</a> ]</span>
+				<div id="color_palette_placeholder" style="display: none;" data-orientation="h" data-height="12" data-width="15" data-target="#count_colour"></div>
+			</dd>
+		</dl>
+		<dl id="vertical_box">
+			<dt><label>{L_ACP_COUNT_VERTICAL}{L_COLON}</label></dt>
+			<dd><input type="checkbox" name="vertical" id="vertical"<!-- IF COUNT_CHECKED --> checked="checked"<!-- ENDIF --> /> {L_ACP_COUNT_VERTICAL_EXPLAIN}</dd>
+		</dl>
+		<dl id="count_enable">
+			<dt><label>{L_ACP_COUNT_ENABLE}{L_COLON}</label></dt>
+			<dd><input type="checkbox" name="countenable" id="countenable"<!-- IF COUNT_CHECKED --> checked="checked"<!-- ENDIF --> /> {L_ACP_COUNT_ENABLE_EXPLAIN}</dd>
+		</dl>
+		<dl>
+			<dt><label>{L_ACP_COUNT_DELETE}{L_COLON}</label></dt>
+			<dd><input type="checkbox" name="deletecount" /> {L_ACP_COUNT_DELETE_EXPLAIN}</dd>
+		</dl>
+	</fieldset>
+
+	<script type="text/javascript">
+	window.onload = switch_type_box();
+	function switch_type_box() {
+		var s = document.getElementById('count_type');
+		if (!s) {
+			return;
+		}
+		var dis = s.value === 'small', f = function(id) {
+			var e = document.getElementById(id);
+			if (e && (e.disabled = dis)) {
+				e.checked = false;
+				document.getElementById('vertical_box').style.display = 'none';
+			}
+			else {
+				document.getElementById('vertical_box').style.display = 'block';
+			}
+		};
+		f('vertical');
+
+		var dis = s.value === 'big', f = function(id) {
+			var e = document.getElementById(id);
+			if (e && (e.disabled = dis)) {
+				e.checked = false;
+				document.getElementById('count_enable').style.display = 'none';
+			}
+			else {
+				document.getElementById('count_enable').style.display = 'block';
+			}
+		};
+		f('countenable');
+	}
+	</script>
+
+	<fieldset class="submit-buttons">
+		<legend>{L_SUBMIT}</legend>
+		{S_HIDDEN_FIELDS}
+		<input type="submit" value="{L_SUBMIT}" name="submit" id="submit" class="button1"/>&nbsp;
+	</fieldset>
+	</form>
+
+<!-- ENDIF -->
+
+<script type="text/javascript">
+function ipreview(element)
+{
+	document.getElementById('imagepreview').innerHTML = '<img src="{S_FILE_PATH}images/counts/'+element.value+'" alt="" />';
+}
+</script>
+
+<!-- INCLUDE overall_footer.html -->

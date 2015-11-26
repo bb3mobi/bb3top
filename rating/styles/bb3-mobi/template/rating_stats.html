@@ -1,0 +1,140 @@
+<!-- INCLUDE overall_header.html -->
+<!--
+	Rating phpBB 3.1: Anvar Stybaev (http://apwa.ru)
+-->
+
+<div class="panel bg3">
+<h2>{TOP_NAME}</h2>
+<!-- EVENT bb3top_stats_topname_prepend -->
+<div class="post bg1">{L_WEBSITE}{L_COLON} <a href="{TOP_URL}" class="topictitle">{TOP_DOMAIN}</a></div>
+<div class="post bg1">{L_TOP_DESC}{L_COLON} {TOP_DESC}</div>
+<div class="post bg1"><a href="{TOP_COMMENT}">{L_PLATFORM_COMMENT}{L_COLON} <b>{TOP_REPLIES}</b></a></div>
+<!-- IF CAT_URL --><div class="post bg1">{L_FORUM_CAT}{L_COLON} <a href="{CAT_URL}" class="forumtitle">{CAT_NAME}</a></div><!-- ENDIF -->
+<!-- IF S_REGISTERED_USER --><img src="http://www.cy-pr.com/e/{TOP_DOMAIN}_5_107.138.206.gif" alt="" /><!-- ENDIF -->
+</div>
+
+<!-- IF S_STATS_DEFAULT -->
+<table class="table1" width="100%">
+<thead>
+	<tr>
+		<th colspan="2" class="header">{L_STATISTICS}</th>
+	</tr>
+</thead>
+<tbody>
+	<tr><td colspan="2" class="bg3 mark">{L_TOP_HOSTS}</td></tr>
+	<tr>
+		<td class="bg1">{L_TOP_TODAY}</td><td class="bg2">{TOP_HOSTS}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_YESTERDAY}</td><td class="bg2">{TOP_HOSTS_BEFORE}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_INALL}</td><td class="bg2">{TOP_HOSTS_ALL}</td>
+	</tr>
+	<tr><td colspan="2" class="bg3 mark">{L_TOP_HITS}</td></tr>
+	<tr>
+		<td class="bg1">{L_TOP_TODAY}</td><td class="bg2">{TOP_HITS}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_YESTERDAY}</td><td class="bg2">{TOP_HITS_BEFORE}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_INALL}</td><td class="bg2">{TOP_HITS_ALL}</td>
+	</tr>
+	<tr><td colspan="2" class="bg3 mark">{L_TOP_IN}</td></tr>
+	<tr>
+		<td class="bg1">{L_TOP_TODAY}</td><td class="bg2">{TOP_IN}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_YESTERDAY}</td><td class="bg2">{TOP_IN_BEFORE}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_INALL}</td><td class="bg2">{TOP_IN_ALL}</td>
+	</tr>
+	<tr><td colspan="2" class="bg3 mark">{L_TOP_OUT}</td></tr>
+	<tr>
+		<td class="bg1">{L_TOP_TODAY}</td><td class="bg2">{TOP_OUT}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_YESTERDAY}</td><td class="bg2">{TOP_OUT_BEFORE}</td>
+	</tr>
+	<tr>
+		<td class="bg1">{L_TOP_INALL}</td><td class="bg2">{TOP_OUT_ALL}</td>
+	</tr>
+</tbody>
+</table>
+<!-- ENDIF -->
+
+<!-- IF S_STATS_HOSTS or S_STATS_ONLINE or S_STATS_CLICK -->
+<table class="table1" width="100%">
+	<thead>
+	<tr>
+		<th class="header">{L_TOP_DEVICE}</th>
+		<!-- IF not S_STATS_ONLINE -->
+		<th class="header"><!-- IF S_STATS_CLICK -->{L_TOP_TYPE}<!-- ELSE -->{L_TOP_HITS}<!-- ENDIF --></th><!-- ENDIF -->
+	</tr>
+	</thead>
+	<tbody>
+	<!-- BEGIN statrow -->
+	<tr>
+		<td class="bg1">{statrow.TOP_DEVICE} [{L_IP}{L_COLON} {statrow.TOP_IP}] &raquo; {statrow.TOP_TIME}</td>
+		<!-- IF not S_STATS_ONLINE -->
+		<td class="bg2 mark"><!-- IF S_STATS_CLICK -->{statrow.TOP_TYPE}{L_COLON} <!-- ENDIF -->{statrow.TOP_COUNT}</td><!-- ENDIF -->
+	</tr>
+	<!-- BEGINELSE -->
+	<tr>
+		<td class="bg3"<!-- IF not S_STATS_ONLINE --> colspan="2"<!-- ENDIF -->><strong>{L_TOP_NOT}</strong></td>
+	</tr>
+	<!-- END statrow -->
+	</tbody>
+</table>
+<!-- ENDIF -->
+
+<!-- IF S_STATS_COUNTRY -->
+<table class="table1" width="100%">
+	<thead>
+	<tr>
+		<th class="header">{L_TOP_PROVIDER}</th>
+		<th class="header">{L_TOP_HOSTS}</th>
+	</tr>
+	</thead>
+	<tbody>
+	<!-- BEGIN countryrow -->
+	<tr>
+		<td class="bg1">{countryrow.PROV_NAME} &raquo; {countryrow.PROV_COUNTRY} [{countryrow.PROV_LANG}]</td>
+		<td class="bg2 mark">{countryrow.COUNT}</td>
+	</tr>
+	<!-- BEGINELSE -->
+	<tr>
+		<td class="bg3" colspan="2"><b>{L_TOP_NOT}</b></td>
+	</tr>
+	<!-- END countryrow -->
+	</tbody>
+</table>
+<!-- ENDIF -->
+
+<div class="post bg3">
+<!-- IF TOP_TYPE != 2 -->
+	<a href="{U_STAT_DEFAULT}"<!-- IF S_STATS_DEFAULT --> class="error"<!-- ENDIF -->>{L_STATISTICS}</a>
+	<!-- IF TOP_HOSTS -->
+	 | <a href="{U_STAT_HOSTS}"<!-- IF S_STATS_HOSTS --> class="error"<!-- ENDIF -->>{L_TOP_HOSTS}</a><!-- ENDIF -->
+	<!-- IF TOP_ONLINE -->
+	 | <a href="{U_STAT_ONLINE}"<!-- IF S_STATS_ONLINE --> class="error"<!-- ENDIF -->>{L_TOP_ONLINE} [{TOP_ONLINE}]</a><!-- ENDIF -->
+	<!-- IF TOP_IN or TOP_OUT -->
+	 | <a href="{U_STAT_CLICK}"<!-- IF S_STATS_CLICK --> class="error"<!-- ENDIF -->>{L_TOP_OUT}</a><!-- ENDIF -->
+	 <!-- IF TOP_HOSTS -->
+	 | <a href="{U_STAT_COUNTRY}"<!-- IF S_STATS_COUNTRY --> class="error"<!-- ENDIF -->>{L_TOP_PROVIDERS}</a><!-- ENDIF -->
+<!-- ELSE -->
+	<p class="error">{L_TOP_CLOSED}</p>
+<!-- ENDIF -->
+</div>
+
+<!-- IF .pagination -->
+<div class="action-bar">
+	<div class="rightside pagination">
+		<!-- INCLUDE pagination.html -->
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

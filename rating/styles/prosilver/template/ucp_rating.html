@@ -1,0 +1,62 @@
+<!-- INCLUDE ucp_header.html -->
+<h2>{L_UCP_RATING_MAIN}</h2>
+
+<div class="panel">
+	<div class="inner">
+	<p>{L_UCP_RATING_MAIN_EXPLAIN}</p>
+
+	<!-- IF ERROR --><span class="error">{ERROR}</span><!-- ENDIF -->
+	<!-- IF S_ADD_PLATFORM -->
+	<div class="action-bar top">
+		<div class="buttons">
+			<a href="{U_ADD_PLATFORM}" class="button icon-button">{L_ADD_PLATFORM}</a>
+		</div>
+	</div>
+	<!-- ENDIF -->
+
+	<!-- IF .toprow -->
+
+		<ul class="topiclist">
+			<li class="header">
+				<dl>
+					<dt><div class="list-inner">{L_TOP_DETAILS}</div></dt>
+					<dd class="extra">{L_TOP_HOSTS}</dd>
+					<dd class="extra">{L_TOP_HITS}</dd>
+					<dd class="extra">{L_TOP_IN}</dd>
+					<dd class="extra">{L_TOP_OUT}</dd>
+					<dd class="mark">{L_STATISTICS}</dd>
+				</dl>
+			</li>
+		</ul>
+
+		<ul class="topiclist cplist responsive-show-columns">
+
+		<!-- BEGIN toprow -->
+		<li class="row<!-- IF toprow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+			<dl>
+				<dt>
+					<div class="list-inner">
+						<a href="{toprow.TOP_URL}" class="topictitle ellipsis-text">{toprow.TOP_NAME}</a>
+						<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+					</div>
+				</dt>
+				<dd class="extra">{toprow.TOP_HOSTS}</dd>
+				<dd class="extra">{toprow.TOP_HITS}</dd>
+				<dd class="extra">{toprow.TOP_IN}</dd>
+				<dd class="extra">{toprow.TOP_OUT}</dd>
+				<dd class="mark"><a href="{toprow.TOP_STATS}" class="button"><span class="imageset icon_topic_poll">{L_STATISTICS}</span></a></dd>
+			</dl>
+		</li>
+		<!-- END toprow -->
+		</ul>
+
+	<!-- ELSE -->
+
+	<strong>{L_PLATFORM_NOT}</strong>
+
+	<!-- ENDIF -->
+
+	</div>
+</div>
+
+<!-- INCLUDE ucp_footer.html -->

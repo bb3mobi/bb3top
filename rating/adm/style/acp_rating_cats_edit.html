@@ -1,0 +1,30 @@
+<!-- INCLUDE overall_header.html -->
+<form id="changecat" action="{U_EDIT_ACTION}" method="post">
+<h1>{L_ACP_CATEGORY_EDIT}</h1>
+<p>{L_ACP_CATEGORY_EDIT_EXPLAIN}</p>
+<fieldset>
+<legend>{L_ACP_CATEGORY}</legend>
+	<dl>
+		<dt><label>{L_ACP_CAT_TITLE}{L_COLON}</label></dt>
+		<dd><label><input name="cat_title" type="text" size="30" maxlength="30" value="{CAT_TITLE}" /></label></dd>
+	</dl>
+	<dl>
+		<dt><label for="cat_desc">{L_ACP_CAT_DESC}{L_COLON}</label></dt>
+		<dd><textarea rows="4" cols="45" name="cat_desc" id="cat_desc">{CAT_DESC}</textarea></dd>
+	</dl>
+	<dl>
+		<dt><label for="cat_type">{L_ACP_CAT_TYPE}{L_COLON}</label></dt>
+		<dd><select name="cat_type" id="cat_type">{CAT_TYPE}</select></dd>
+	</dl>
+	<dl>
+		<dt><label for="cat_icon">{L_ACP_CAT_ICON}{L_COLON}</label><p>{L_ACP_CAT_ICON_EXPLAIN}</p></dt>
+		<dd><label><input name="cat_icon" id="cat_icon" type="text" size="30" maxlength="30" value="{CAT_ICON}" /></label></dd>
+	</dl>
+</fieldset>
+<fieldset class="submit-buttons">
+	<legend>{L_SUBMIT}</legend>
+	<input type="submit" value="{L_SUBMIT}" name="submit" class="button1"/>&nbsp;
+	<input type="submit" value="{L_CANCEL}" name="cancelcat" class="button2"/>
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->
