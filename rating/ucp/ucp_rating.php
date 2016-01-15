@@ -15,6 +15,12 @@ class ucp_rating
 
 	protected $db;
 
+	var $min_name = 10;
+
+	var $max_name = 30;
+
+	var $min_desc = 40;
+
 	var $u_action;
 
 	function main($id, $mode)
@@ -55,7 +61,6 @@ class ucp_rating
 				switch($action)
 				{
 					case 'add':
-
 						if (!$config['top_rating_type'] || $config['top_rating_type'] == 1)
 						{
 							trigger_error($this->user->lang['TOP_ADD_NOT']);
@@ -90,7 +95,7 @@ class ucp_rating
 								$error[] = ($char > $this->max_name) ? $this->user->lang['TOP_NAME_ERROR2'] : $this->user->lang['TOP_NAME_ERROR'];
 							}
 
-							if (mb_strlen($top_desc) < $config['top_desc_lenght'])
+							if (mb_strlen($top_desc) < $this->min_desc)
 							{
 								$error[] = $this->user->lang['TOP_DESC_ERROR'];
 							}
@@ -181,7 +186,7 @@ class ucp_rating
 						$s_hidden_fields['action'] = 'add';
 
 						$template->assign_vars(array(
-							'L_TOP_DESC_EXPLAIN'	=> sprintf($this->user->lang['TOP_DESC_EXPLAIN'], $config['top_desc_lenght']),
+							'L_TOP_DESC_EXPLAIN'	=> sprintf($this->user->lang['TOP_DESC_EXPLAIN'], $this->min_desc),
 							'L_TOP_NAME_EXPLAIN'	=> sprintf($this->user->lang['TOP_NAME_EXPLAIN'], $this->min_name, $this->max_name),
 							'TOP_NAME'				=> $top_name,
 							'TOP_URL'				=> $top_url,
@@ -462,11 +467,24 @@ class ucp_rating
 							if (isset($toprow['top_icon_' . $type]))
 							{
 								$top_icon = explode(";", $toprow['top_icon_' . $type]);
+
+								$image_url = $phpbb_root_path . 'images/counts/' . $top_icon[0];
+
+								$width = $height = 0;
+								if (file_exists($image_url))
+								{
+									$image_info = @getimagesize($image_url);
+									$width = $image_info[0];
+									$height = $image_info[1];
+								}
+
 								$template->assign_block_vars('counts', array(
 									'COUNT_TYPE'	=> $name,
 									'COUNT_IMG'		=> generate_board_url() . '/' . $type . '/' . $toprow['top_id'],
 									'COUNT_URL'		=> generate_board_url() . '/in/' . $toprow['top_id'],
-									'IMAGE_URL'		=> $phpbb_root_path . 'images/counts/' . $top_icon[0],
+									'COUNT_WIDTH'	=> $width,
+									'COUNT_HEIGHT'	=> $height,
+									'IMAGE_URL'		=> $image_url,
 								));
 							}
 						}

@@ -244,6 +244,8 @@ class counter
 
 	public function top_count($top_id, $action)
 	{
+		$error = true;
+
 		$user_ip = $this->ip();
 
 		$sql_array = array(
@@ -270,8 +272,6 @@ class counter
 		$result = $this->db->sql_query($sql);
 		$row = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
-
-		$error = true;
 
 		if ($row && $row['top_icon_big'] && $row['top_icon_small'] && !$this->user->data['is_bot'])
 		{
@@ -446,23 +446,28 @@ class counter
 
 		if ($error)
 		{
-			if (is_file($this->phpbb_root_path . 'images/counts/default.gif'))
-			{
-				header('Cache-Control: public');
-				header("Content-type: image/gif");
-				@readfile($this->phpbb_root_path . 'images/counts/default.gif');
-			}
-			else
-			{
-				send_status_line(404, 'Not Found');
-				trigger_error($this->user->lang('FILE_NOT_FOUND', $action . '/' . $top_id));
-			}
+			$this->default_img($action . '/' . $top_id);
 		}
 
 		flush();
 
 		$this->db->sql_close();
 		exit;
+	}
+
+	private function default_img($link)
+	{
+		if (is_file($this->phpbb_root_path . 'images/counts/default.gif'))
+		{
+			header('Cache-Control: public');
+			header("Content-type: image/gif");
+			return readfile($this->phpbb_root_path . 'images/counts/default.gif');
+		}
+		else
+		{
+			send_status_line(404, 'Not Found');
+			trigger_error($this->user->lang('FILE_NOT_FOUND', $link));
+		}
 	}
 
 	private function ip()
@@ -579,6 +584,23 @@ class counter
 		if (!$browser && strpos($user_agent, 'Gecko'))
 		{
 			return 'Browser based on Gecko';
+		}
+
+		if (!$browser)
+		{
+			$mobile_browser = '';
+			$browser_ary = array(
+				'Alcatel, Sony Ericsson, Motorola, Panasonic, Philips, Samsung, Sanyo, Sharp, Sony, Ericsson,
+				j2me, midp, wap, pda, series60, vodafone, mobile, phone, up.browser, up.link, xiino/i');
+			foreach ($browser_ary as $mobile_browser)
+			{
+				if (stripos($user_agent, $mobile_browser) !== false)
+				{
+					$version = $mobile_browser;
+					break;
+				}
+			}
+			$browser = 'Browser';
 		}
 
 		return $browser . ' ' . $version;

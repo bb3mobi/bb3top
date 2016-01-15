@@ -225,9 +225,9 @@ class rating
 			strip_bbcode($top_desc);
 			$top_desc = str_replace(array($row['top_url'], $top_domain), '', $top_desc);
 			// Limit chars
-			if (mb_strlen($top_desc) >= 250)
+			if (mb_strlen($top_desc) >= $this->config['top_desc_lenght'])
 			{
-				$top_desc = mb_substr($top_desc, 0, 250) . '...';
+				$top_desc = mb_substr($top_desc, 0, $this->config['top_desc_lenght']) . '...';
 			}
 
 			$top_row = array(

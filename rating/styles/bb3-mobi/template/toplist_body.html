@@ -6,21 +6,19 @@
 
 	<div class="small-icon row <!-- IF toprow.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF toprow.S_TOPIC_REPORTED --> reported<!-- ENDIF -->" id="site{toprow.TOP_ID}">
 		<div class="inner">
-			{toprow.TOP_NUMBER}.
+			<h3><!-- IF toprow.S_HAS_POLL -->% <!-- ENDIF --><a href="{toprow.U_VIEW_TOPIC}" title="{L_PLATFORM_COMMENT}{L_COLON} {toprow.REPLIES}">{toprow.TOP_NAME}</a></h3>
+			<span class="button">{toprow.TOP_NUMBER}</span> 
 			<!-- IF toprow.TOPIC_ICON_IMG and S_TOPIC_ICONS --><img src="{T_ICONS_PATH}{toprow.TOPIC_ICON_IMG}" alt=""/><!-- ENDIF -->
-			<a href="{toprow.TOP_URL}" class="topictitle">{toprow.TOP_DOMAIN}</a> <i>[{toprow.TOP_HOSTS}/{toprow.TOP_HITS}]</i>
-			<a href="{toprow.TOP_STATS}" title="{L_STATISTICS}" class="rightside button"><img src="{T_THEME_PATH}/images/icon_topic_poll.gif" alt=""/></a>
+			<a href="{toprow.TOP_URL}" class="topictitle" title="{toprow.TOP_NAME}">{toprow.TOP_DOMAIN}</a> <a href="{toprow.TOP_STATS}" title="{L_STATISTICS}" class="button rightside"><span>{toprow.TOP_HOSTS} <img src="{T_THEME_PATH}/images/icon_topic_poll.gif" alt=""/> {toprow.TOP_HITS}</span></a>
 			<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+			<span class="rightside">{L_TOP_ONLINE}{L_COLON} {toprow.TOP_ONLINE}</span>
+			<!-- IF toprow.S_TOPIC_UNAPPROVED or toprow.S_POSTS_UNAPPROVED -->
+			<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_unapproved.gif" alt=""/></a><!-- ENDIF -->
+			<!-- IF toprow.S_TOPIC_DELETED -->
+			<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_deleted.png" alt=""/></a><!-- ENDIF -->
+			<!-- IF toprow.S_TOPIC_REPORTED -->
+			<a href="{toprow.U_MCP_REPORT}"><img src="{T_THEME_PATH}/images/icon_topic_reported.gif" alt=""/></a><!-- ENDIF -->
 		</div>
-		<!-- IF toprow.S_HAS_POLL -->% <!-- ENDIF -->
-		<a href="{toprow.U_VIEW_TOPIC}">{L_PLATFORM_COMMENT}{L_COLON} {toprow.REPLIES}</a>
-		<span class="rightside">{L_TOP_ONLINE}{L_COLON} {toprow.TOP_ONLINE}</span>
-		<!-- IF toprow.S_TOPIC_UNAPPROVED or toprow.S_POSTS_UNAPPROVED -->
-		<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_unapproved.gif" alt=""/></a><!-- ENDIF -->
-		<!-- IF toprow.S_TOPIC_DELETED -->
-		<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_deleted.png" alt=""/></a><!-- ENDIF -->
-		<!-- IF toprow.S_TOPIC_REPORTED -->
-		<a href="{toprow.U_MCP_REPORT}"><img src="{T_THEME_PATH}/images/icon_topic_reported.gif" alt=""/></a><!-- ENDIF -->
 	</div>
 
 	<!-- BEGINELSE -->

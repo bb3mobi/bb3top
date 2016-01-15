@@ -1,4 +1,8 @@
 <!-- INCLUDE overall_header.html -->
+<!-- IF .toprow -->
+<h2>{L_UCP_RATING_MAIN}</h2>
+<p>{L_UCP_RATING_MAIN_EXPLAIN}</p>
+<!-- ENDIF -->
 
 <!-- BEGIN announcerow -->
 <!-- IF announcerow.S_FIRST_ROW --><div class="panel bg3"><!-- ENDIF -->
@@ -13,3 +17,10 @@
 </div>
 <!-- ENDIF -->
 <!-- END announcerow -->
+
+<div class="action-bar">
+<!-- BEGIN t_block2 -->
+	<!-- IF not t_block2.S_SELECTED --><a href="{t_block2.U_TITLE}" class="button">{t_block2.L_TITLE}</a><!-- ENDIF -->
+<!-- END t_block2 -->
+<!-- IF S_ADD_PLATFORM --><a href="{U_ADD_PLATFORM}" class="button">{L_ADD_PLATFORM}</a><!-- ENDIF -->
+</div>
