@@ -249,7 +249,7 @@ class counter
 		$user_ip = $this->ip();
 
 		$sql_array = array(
-			'SELECT'	=> 'r.top_id, r.top_online, r.top_hits, r.top_hosts, r.top_hits_all, r.top_hosts_all, r.top_icon_big, r.top_icon_small',
+			'SELECT'	=> 'r.top_id, r.top_online, r.top_hits, r.top_hosts, r.top_in, r.top_hits_all, r.top_hosts_all, r.top_icon_big, r.top_icon_small',
 			'FROM'		=> array(RATING_TABLE => 'r'),
 		);
 
@@ -291,19 +291,22 @@ class counter
 
 				if ($row['top_ip'] != $user_ip)
 				{
-					$sql = 'INSERT INTO ' . RATING_HITS_TABLE . " SET
-						`top_id`		= " . $row['top_id'] . ",
-						`top_time`		= '" . time() . "',
-						`top_ip`		= '" . $user_ip . "',
-						`top_device`	= '" . (string) $this->browser() . "',
-						`top_prov_id`	= " . $ip_prov_id . ",
-						`top_count`		= 1";
-					$this->db->sql_query($sql);
+					if ($row['top_in'] > $row['top_hosts']/$row['top_in'])
+					{
+						$sql = 'INSERT INTO ' . RATING_HITS_TABLE . " SET
+							`top_id`		= " . $row['top_id'] . ",
+							`top_time`		= '" . time() . "',
+							`top_ip`		= '" . $user_ip . "',
+							`top_device`	= '" . (string) $this->browser() . "',
+							`top_prov_id`	= " . $ip_prov_id . ",
+							`top_count`		= 1";
+						$this->db->sql_query($sql);
 
-					$sql_upd += array(
-						'top_hosts'		=> $row['top_hosts'] + 1,
-						'top_hosts_all'	=> $row['top_hosts_all'] + 1,
-					);
+						$sql_upd += array(
+							'top_hosts'		=> $row['top_hosts'] + 1,
+							'top_hosts_all'	=> $row['top_hosts_all'] + 1,
+						);
+					}
 				}
 				else
 				{
@@ -313,10 +316,13 @@ class counter
 					$this->db->sql_query($sql);
 				}
 
-				$sql_upd += array(
-					'top_hits'		=> $row['top_hits'] + 1,
-					'top_hits_all'	=> $row['top_hits_all'] + 1,
-				);
+				if ($user_ip)
+				{
+					$sql_upd += array(
+						'top_hits'		=> $row['top_hits'] + 1,
+						'top_hits_all'	=> $row['top_hits_all'] + 1,
+					);
+				}
 
 				if (!$row['top_time'])
 				{

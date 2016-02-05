@@ -125,9 +125,12 @@ class rating
 
 			if (!$top_count)
 			{
+				$sql_where .= ' AND t.topic_visibility != ' . ITEM_DELETED;
+
 				$sql = 'SELECT COUNT(top_id) AS num_top
-					FROM ' . RATING_TABLE . " r
-					WHERE $sql_where ";
+					FROM ' . RATING_TABLE . ' r, ' . TOPICS_TABLE . " t
+					WHERE $sql_where
+						AND r.topic_id = t.topic_id";
 				$result = $this->db->sql_query($sql);
 				$top_count = (int) $this->db->sql_fetchfield('num_top');
 				$this->db->sql_freeresult($result);
@@ -158,8 +161,8 @@ class rating
 
 		$sql_array['SELECT'] .= ', p.post_text';
 		$sql_array['LEFT_JOIN'][] = array(
-			'FROM' => array(POSTS_TABLE => 'p'),
-			'ON'   => 't.topic_first_post_id = p.post_id',
+			'FROM'	=> array(POSTS_TABLE => 'p'),
+			'ON'	=> 't.topic_first_post_id = p.post_id',
 		);
 
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
@@ -213,6 +216,7 @@ class rating
 
 			$topic_unapproved = ($row['topic_visibility'] == ITEM_UNAPPROVED && $this->auth->acl_get('m_approve', $row['forum_id']));
 			$posts_unapproved = ($row['topic_visibility'] == ITEM_APPROVED && $row['topic_posts_unapproved'] && $this->auth->acl_get('m_approve', $row['forum_id']));
+			$topic_deleted = $row['topic_visibility'] == ITEM_DELETED;
 
 			$u_mcp_queue = ($topic_unapproved || $posts_unapproved) ? append_sid("{$this->phpbb_root_path}mcp.$this->php_ext", 'i=queue&amp;mode=' . (($topic_unapproved) ? 'approve_details' : 'unapproved_posts') . "&amp;t=$topic_id", true, $this->user->session_id) : '';
 
@@ -254,6 +258,7 @@ class rating
 				'S_TOPIC_REPORTED'		=> ($row['topic_reported'] && $this->auth->acl_get('m_report', $row['forum_id'])) ? true : false,
 				'S_TOPIC_UNAPPROVED'	=> $topic_unapproved,
 				'S_POSTS_UNAPPROVED'	=> $posts_unapproved,
+				'S_TOPIC_DELETED'		=> $topic_deleted,
 				'S_TOPIC_LOCKED'		=> ($row['topic_status'] == ITEM_LOCKED) ? true : false,
 				'S_TOPIC_MOVED'			=> ($row['topic_status'] == ITEM_MOVED) ? true : false,
 				'S_TOPIC_TYPE_SWITCH'	=> ($row['topic_type'] == POST_ANNOUNCE || $row['topic_type'] == POST_GLOBAL) ? 1 : 0,
