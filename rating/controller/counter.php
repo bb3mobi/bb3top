@@ -82,6 +82,7 @@ class counter
 
 		$sql_upd = array();
 
+		/* Выводим данные из базы */
 		$sql_array = array(
 			'SELECT'	=> 'r.top_id, r.cat_id, r.top_hosts, r.top_in, r.top_in_all, r.top_type, r.top_time_add',
 			'FROM'		=> array(RATING_TABLE => 'r'),
@@ -106,6 +107,7 @@ class counter
 		/* Пока cron не пересчитает, ни каких подсчётов. */
 		if ($this->config['top_rating_last_gc'] > time() - $this->config['top_rating_gc'])
 		{
+			/* Если нету ip значит не вносились ранее изменения, создаём или обновляем запись */
 			if (!$row['top_ip'])
 			{
 				$ip_prov_id = 0;
@@ -137,6 +139,7 @@ class counter
 				$this->db->sql_query($sql);
 			}
 
+			/* Убираем статус у сайта "Новый" */
 			if ($row['top_type'] == 1 && $row['top_time_add'] < time()-(86400*$this->config['top_platform_time']))
 			{
 				$sql = 'UPDATE ' . RATING_CAT_TABLE . ' SET `cat_top_new` = (`cat_top_new` - 1)
@@ -148,6 +151,7 @@ class counter
 				);
 			}
 
+			/* Добавляем +1 к переходу по ссылке и обновляем запись в базе */
 			$sql_upd += array(
 				'top_in'		=> $row['top_in'] + 1,
 				'top_in_all'	=> $row['top_in_all'] + 1,
@@ -158,6 +162,7 @@ class counter
 			$this->db->sql_query($sql);
 		}
 
+		/* Выисляем положение сайта в общем рейтинге и отправляем на ту страницу */
 		$sql = 'SELECT COUNT(top_id) AS num_top FROM ' . RATING_TABLE . "
 			WHERE top_hosts > {$row['top_hosts']}
 			" . (($row['top_type']) ? ' AND cat_id = ' . $row['cat_id'] : ' AND top_type = 0');
@@ -165,6 +170,7 @@ class counter
 		$top_count = (int) $this->db->sql_fetchfield('num_top');
 		$this->db->sql_freeresult($result);
 
+		/* Если у сайта статус "Новый" отправляем пользователя в его категорию */
 		$page = ($row['top_type']) ? array('cat_id' => $row['cat_id']) : array();
 
 		if ($top_count > $this->config['top_per_page']*2)
@@ -239,17 +245,22 @@ class counter
 			// We redirect to the url. The third parameter indicates that external redirects are allowed.
 			redirect($row['top_url'], false, true);
 		}
+		/* Пока крон не подсчитал, пользователя обратно в ТОП */
 		redirect($this->helper->route("bb3top_rating_top"));
 	}
 
 	public function top_count($top_id, $action)
 	{
-		$error = true;
+		/* GIF изображение */
+		header('Cache-Control: public');
+		header("Content-type: image/gif");
 
+		$error = false;
 		$user_ip = $this->ip();
 
+		/* Выводим данные сайта */
 		$sql_array = array(
-			'SELECT'	=> 'r.top_id, r.top_online, r.top_hits, r.top_hosts, r.top_in, r.top_hits_all, r.top_hosts_all, r.top_icon_big, r.top_icon_small',
+			'SELECT'	=> 'r.top_id, r.top_online, r.top_hits, r.top_hosts, r.top_hits_all, r.top_hosts_all, r.top_icon_big, r.top_icon_small',
 			'FROM'		=> array(RATING_TABLE => 'r'),
 		);
 
@@ -273,7 +284,14 @@ class counter
 		$row = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
 
-		if ($row && $row['top_icon_big'] && $row['top_icon_small'] && !$this->user->data['is_bot'])
+		/* Ошибка или бот поисковой */
+		if (!$row['top_id'] && !$this->user->data['is_bot'])
+		{
+			$error = true;
+		}
+
+		/* Не будем счиать ошибки */
+		if (!$error)
 		{
 			$sql_upd = array();
 			$ip_prov_id = 0;
@@ -289,9 +307,10 @@ class counter
 				}
 				$this->db->sql_freeresult($result);
 
+				/* Если нет ip пользователя в базе, значит нужно его создать и подсчитать хосты */
 				if ($row['top_ip'] != $user_ip)
 				{
-					if ($row['top_in'] > $row['top_hosts']/$row['top_in'])
+					if ($row['top_hits'] > $row['top_hosts']+$row['top_hosts'])
 					{
 						$sql = 'INSERT INTO ' . RATING_HITS_TABLE . " SET
 							`top_id`		= " . $row['top_id'] . ",
@@ -310,12 +329,14 @@ class counter
 				}
 				else
 				{
+					/* Иначе просто обновим количество визитов пользователя */
 					$sql = 'UPDATE ' . RATING_HITS_TABLE . ' SET `top_time` = "' . time() . '", `top_count` = (`top_count` + 1)
 						WHERE top_id = ' . $row['top_id'] . '
 						AND top_ip = "' . $row['top_ip'] . '"';
 					$this->db->sql_query($sql);
 				}
 
+				/* Общее число и количество визитов */
 				if ($user_ip)
 				{
 					$sql_upd += array(
@@ -324,6 +345,7 @@ class counter
 					);
 				}
 
+				/* Время онлайн, индивидуально для каждого пользователя */
 				if (!$row['top_time'])
 				{
 					$sql = 'INSERT INTO ' . RATING_ONLINE_TABLE . " SET
@@ -351,128 +373,126 @@ class counter
 					);
 				}
 
+				/* Все изменеия фиксируем у данного сайта */
 				$sql = 'UPDATE ' . RATING_TABLE . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_upd) . '
 					WHERE top_id = ' . $row['top_id'];
 				$this->db->sql_query($sql);
 			}
 
-			switch($action)
+			/* Если создать и(или) вывести счётчик не получилось, то ошибка */
+			if (!$counter = $this->count_img($action, $row))
 			{
-				case 'big':
-
-					$counts = explode(";", $row['top_icon_big']);
-
-					if (is_file($this->phpbb_root_path . 'images/counts/' . $counts[0]))
-					{
-						header('Cache-Control: public');
-						header("Content-type: image/gif");
-
-						$image = imagecreatefromgif($this->phpbb_root_path . 'images/counts/' . $counts[0]);
-
-						if (isset($counts[1]) && $counts[1] == 'v')
-						{
-							$position = 2;
-							$top_hosts = 68 - (strlen($row['top_hosts']) * 5);
-						}
-						else
-						{
-							$position = 15;
-							$top_hosts = 35 - (strlen($row['top_hosts']) * 5);
-						}
-						$top_hits = 68 - (strlen($row['top_hits']) * 5);
-
-						$white = imagecolorallocate($image, 255, 255, 255);
-						if (isset($counts[2]) && strlen($counts[2]) === 7)
-						{
-							$rgb = array_map('hexdec', str_split(ltrim(strtoupper($counts[2]), '#'), 2));
-							$black = imagecolorallocate($image, $rgb[0], $rgb[1], $rgb[2]);
-						}
-						else
-						{
-							$black = imagecolorallocate($image, 0, 0, 0);
-						}
-						imagestring($image, 1, $top_hosts, $position, $row['top_hosts'], $black);
-						imagestring($image, 1, $top_hits, 15, $row['top_hits'], $black);
-						imagegif($image);
-						imageDestroy($image);
-
-						$error = false;
-					}
-				break;
-
-				case 'small':
-
-					$counts = explode(";", $row['top_icon_small']);
-
-					if (is_file($this->phpbb_root_path . 'images/counts/' . $counts[0]))
-					{
-						header('Cache-Control: public');
-						header("Content-type: image/gif");
-
-						if (isset($counts[1]))
-						{
-							$image = imagecreatefromgif($this->phpbb_root_path . 'images/counts/' . $counts[0]);
-
-							$white = imagecolorallocate($image, 255, 255, 255);
-							if (isset($counts[2]) && strlen($counts[2]) === 7)
-							{
-								$rgb = array_map('hexdec', str_split(ltrim(strtoupper($counts[2]), '#'), 2));
-								$black = imagecolorallocate($image, $rgb[0], $rgb[1], $rgb[2]);
-							}
-							else
-							{
-								$black = imagecolorallocate($image, 0, 0, 0);
-							}
-
-							if ($counts[1] == 'all')
-							{
-								$hosts_all = 65 - (strlen($row['top_hosts_all']) * 5);
-								imagestring($image, 1, $hosts_all, 4, $row['top_hosts_all'], $black);
-							}
-							else
-							{
-								$top_hosts = 35 - (strlen($row['top_hosts']) * 5);
-								$top_hits = 68 - (strlen($row['top_hits']) * 5);
-								imagestring($image, 1, $top_hosts, 4, $row['top_hosts'], $black);
-								imagestring($image, 1, $top_hits, 4, $row['top_hits'], $black);
-							}
-							imagegif($image);
-							imageDestroy($image);
-						}
-						else
-						{
-							@readfile($this->phpbb_root_path . 'images/counts/' . $counts[0]);
-						}
-
-						$error = false;
-					}
-				break;
+				$action = $row['top_hosts'];
+				$top_id = $row['top_hits'];
+				$error = true;
 			}
 		}
 
+		/* Если ошибка дошла сюда, значит пора выводить изображение по умолчанию */
 		if ($error)
 		{
-			$this->default_img($action . '/' . $top_id);
+			$this->default_img($action, $top_id);
 		}
 
+		/* Очищаем буфер, закрываем соединение и завершаем работу скрипта */
 		flush();
-
 		$this->db->sql_close();
 		exit;
 	}
 
-	private function default_img($link)
+	/* Функция для создания счётчиков */
+	private function count_img($action, $row)
 	{
-		if (is_file($this->phpbb_root_path . 'images/counts/default.gif'))
+		$top_icon = ($action == 'big') ? $row['top_icon_big'] : $row['top_icon_small'];
+		$counts = explode(";", $top_icon);
+
+		$image_file = $this->phpbb_root_path . 'images/counts/' . $counts[0];
+		/* Нет файла, значит завершаем работу функции и выводим false */
+		if (!is_file($image_file))
 		{
-			header('Cache-Control: public');
-			header("Content-type: image/gif");
-			return readfile($this->phpbb_root_path . 'images/counts/default.gif');
+			return false;
+		}
+
+		/* Нет настроек для маленького счётчика, значит выводим файл как есть */
+		if (!isset($counts[1]) && $action == 'small')
+		{
+			return readfile($image_file);
+		}
+
+		$image = imagecreatefromgif($image_file);
+
+		$white = imagecolorallocate($image, 255, 255, 255);
+		/* Проверяем наличие html кода цвета, при удаче конвертируем цвет из html в RGB и красим цифры счётчика */
+		if (isset($counts[2]) && strlen($counts[2]) === 7)
+		{
+			$rgb = array_map('hexdec', str_split(ltrim(strtoupper($counts[2]), '#'), 2));
+			$black = imagecolorallocate($image, $rgb[0], $rgb[1], $rgb[2]);
 		}
 		else
 		{
-			send_status_line(404, 'Not Found');
-			trigger_error($this->user->lang('FILE_NOT_FOUND', $link));
+			$black = imagecolorallocate($image, 0, 0, 0);
+		}
+
+		/* Для большого счётчика определяем область размещения цифр на картинке */
+		if ($action == 'big')
+		{
+			if (isset($counts[1]) && $counts[1] == 'v')
+			{
+				$position = 2;
+				$top_hosts = 68 - (strlen($row['top_hosts']) * 5);
+			}
+			else
+			{
+				$position = 15;
+				$top_hosts = 35 - (strlen($row['top_hosts']) * 5);
+			}
+			$top_hits = 68 - (strlen($row['top_hits']) * 5);
+			imagestring($image, 1, $top_hosts, $position, $row['top_hosts'], $black);
+			imagestring($image, 1, $top_hits, 15, $row['top_hits'], $black);
+		}
+		else
+		{
+			/* Для маленького счётчика выводим общее количество посетиелей, иначе посетители за последние сутки */
+			if ($counts[1] == 'all')
+			{
+				$hosts_all = 65 - (strlen($row['top_hosts_all']) * 5);
+				imagestring($image, 1, $hosts_all, 4, $row['top_hosts_all'], $black);
+			}
+			else
+			{
+				$top_hosts = 35 - (strlen($row['top_hosts']) * 5);
+				$top_hits = 68 - (strlen($row['top_hits']) * 5);
+				imagestring($image, 1, $top_hosts, 4, $row['top_hosts'], $black);
+				imagestring($image, 1, $top_hits, 4, $row['top_hits'], $black);
+			}
+		}
+		imagegif($image);
+		imagedestroy($image);
+
+		return true;
+	}
+
+	private function default_img($action, $top_id)
+	{
+		$image_file = '';
+		if (is_file($this->phpbb_root_path . 'images/counts/default.gif'))
+		{
+			$image_file = $this->phpbb_root_path . 'images/counts/default.gif';
+		}
+
+		/* Выводим изображение по умолчанию, а если $action отличается, то создаём изображение и пишем на нём их */
+		if ($image_file && ($action == 'big' || $action == 'small'))
+		{
+			return readfile($image_file);
+		}
+		else
+		{
+			$image = imagecreatetruecolor(82, 17);
+			$color = imagecolorallocate($image, 255, 255, 255);
+			imagestring($image, 1, 35 - (strlen($action) * 5), 4, $action, $color);
+			imagestring($image, 1, 78 - (strlen($top_id) * 5), 4, $top_id, $color);
+			imagegif($image);
+			imagedestroy($image);
 		}
 	}
 
