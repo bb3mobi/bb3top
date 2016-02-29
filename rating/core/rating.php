@@ -137,14 +137,6 @@ class rating
 			}
 		}
 
-		$sql_limit = $this->config['top_per_page'];
-		$sql_start = $start;
-		if ($start > $top_count / 2)
-		{
-			$sql_limit = $this->pagination->reverse_limit($start, $sql_limit, $top_count);
-			$sql_start = $this->pagination->reverse_start($start, $sql_limit, $top_count);
-		}
-
 		// Now only pull the data of the requested topics
 		$sql_array = array(
 			'SELECT'	=> 'r.*',
@@ -166,7 +158,7 @@ class rating
 		);
 
 		$sql = $this->db->sql_build_query('SELECT', $sql_array);
-		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+		$result = $this->db->sql_query_limit($sql, $this->config['top_per_page'], $start);
 
 		$rowset = $topic_icons = array();
 
@@ -499,17 +491,10 @@ class rating
 	public function view_stat_hosts($top_id, $top_count = 0)
 	{
 		$start = $this->request->variable('top', 0);
-		$sql_limit = $this->config['top_per_page'];
-		$sql_start = $start;
-		if ($start > $top_count / 2)
-		{
-			$sql_limit = $this->pagination->reverse_limit($start, $sql_limit, $top_count);
-			$sql_start = $this->pagination->reverse_start($start, $sql_limit, $top_count);
-		}
 
 		$sql = 'SELECT * FROM ' . RATING_HITS_TABLE . "
 			WHERE top_id = " . (int) $top_id;
-		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+		$result = $this->db->sql_query_limit($sql, $this->config['top_per_page'], $start);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -532,17 +517,10 @@ class rating
 	public function view_stat_online($top_id, $top_count = 0)
 	{
 		$start = $this->request->variable('top', 0);
-		$sql_limit = $this->config['top_per_page'];
-		$sql_start = $start;
-		if ($start > $top_count / 2)
-		{
-			$sql_limit = $this->pagination->reverse_limit($start, $sql_limit, $top_count);
-			$sql_start = $this->pagination->reverse_start($start, $sql_limit, $top_count);
-		}
 
 		$sql = 'SELECT * FROM ' . RATING_ONLINE_TABLE . "
 			WHERE top_id = " . (int) $top_id;
-		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+		$result = $this->db->sql_query_limit($sql, $this->config['top_per_page'], $start);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -564,17 +542,10 @@ class rating
 	public function view_stat_click($top_id, $top_count = 0)
 	{
 		$start = $this->request->variable('top', 0);
-		$sql_limit = $this->config['top_per_page'];
-		$sql_start = $start;
-		if ($start > $top_count / 2)
-		{
-			$sql_limit = $this->pagination->reverse_limit($start, $sql_limit, $top_count);
-			$sql_start = $this->pagination->reverse_start($start, $sql_limit, $top_count);
-		}
 
 		$sql = 'SELECT * FROM ' . RATING_CLICK_TABLE . "
 			WHERE top_id = " . (int) $top_id;
-		$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
+		$result = $this->db->sql_query_limit($sql, $this->config['top_per_page'], $start);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
