@@ -34,6 +34,7 @@ $lang = array_merge($lang, array(
 	'PLATFORM_DETAILS'		=> 'Сайты из категории: %s',
 	'PLATFORM_COMMENT'		=> 'Комментарии',
 	'PLATFORM_USER'			=> 'Сайтов в рейтинге',
+	'PLATFORM_DELETED'		=> 'Сайт был помещён в корзину и не участвует в общем рейтинге!',
 	'PLATFORM_TYPE'	=> array(
 		0	=> 'Участник ТОП',
 		1	=> 'Новый участник',

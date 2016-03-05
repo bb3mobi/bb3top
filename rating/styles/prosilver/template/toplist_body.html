@@ -31,9 +31,12 @@
 					<a href="{toprow.TOP_URL}" class="topictitle ellipsis-text">{toprow.TOP_NUMBER}. {toprow.TOP_NAME}</a>
 					<!-- IF toprow.S_TOPIC_UNAPPROVED or toprow.S_POSTS_UNAPPROVED -->
 					<a href="{toprow.U_MCP_QUEUE}">{UNAPPROVED_IMG}</a> <!-- ENDIF -->
-					<!-- IF toprow.S_TOPIC_DELETED --><a href="{toprow.U_MCP_QUEUE}">{DELETED_IMG}</a> <!-- ENDIF -->
-					<!-- IF toprow.S_TOPIC_REPORTED --><a href="{toprow.U_MCP_REPORT}">{REPORTED_IMG}</a><!-- ENDIF -->
-					<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+					<!-- IF toprow.S_TOPIC_REPORTED --><a href="{toprow.U_MCP_REPORT}">{REPORTED_IMG}</a> <!-- ENDIF -->
+					<!-- IF toprow.S_TOPIC_DELETED -->
+						<br /><span class="error">{DELETED_IMG} {L_PLATFORM_DELETED}</span>
+					<!-- ELSE -->
+						<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+					<!-- ENDIF -->
 					<div class="right-box"><!-- IF toprow.S_HAS_POLL -->{POLL_IMG} <!-- ENDIF -->
 					<a href="{toprow.U_VIEW_TOPIC}">{L_PLATFORM_COMMENT}{L_COLON} <strong>{toprow.REPLIES}</strong></a></div>
 				</div>

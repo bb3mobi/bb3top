@@ -10,12 +10,14 @@
 			<span class="button">{toprow.TOP_NUMBER}</span> 
 			<!-- IF toprow.TOPIC_ICON_IMG and S_TOPIC_ICONS --><img src="{T_ICONS_PATH}{toprow.TOPIC_ICON_IMG}" alt=""/><!-- ENDIF -->
 			<a href="{toprow.TOP_URL}" class="topictitle" title="{toprow.TOP_NAME}">{toprow.TOP_DOMAIN}</a> <a href="{toprow.TOP_STATS}" title="{L_STATISTICS}" class="button rightside"><span>{toprow.TOP_HOSTS} <img src="{T_THEME_PATH}/images/icon_topic_poll.gif" alt=""/> {toprow.TOP_HITS}</span></a>
-			<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
-			<span class="rightside">{L_TOP_ONLINE}{L_COLON} {toprow.TOP_ONLINE}</span>
+			<!-- IF toprow.S_TOPIC_DELETED -->
+				<p class="error"><img src="{T_THEME_PATH}/images/icon_topic_deleted.png" alt=""/> {L_PLATFORM_DELETED}</p>
+			<!-- ELSE -->
+				<!-- IF toprow.TOP_DESC --><br />{toprow.TOP_DESC}<!-- ENDIF -->
+				<span class="rightside">{L_TOP_ONLINE}{L_COLON} {toprow.TOP_ONLINE}</span>
+			<!-- ENDIF -->
 			<!-- IF toprow.S_TOPIC_UNAPPROVED or toprow.S_POSTS_UNAPPROVED -->
 			<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_unapproved.gif" alt=""/></a><!-- ENDIF -->
-			<!-- IF toprow.S_TOPIC_DELETED -->
-			<a href="{toprow.U_MCP_QUEUE}"><img src="{T_THEME_PATH}/images/icon_topic_deleted.png" alt=""/></a><!-- ENDIF -->
 			<!-- IF toprow.S_TOPIC_REPORTED -->
 			<a href="{toprow.U_MCP_REPORT}"><img src="{T_THEME_PATH}/images/icon_topic_reported.gif" alt=""/></a><!-- ENDIF -->
 		</div>
