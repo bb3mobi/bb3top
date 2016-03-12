@@ -27,13 +27,11 @@ class ucp_rating
 	{
 		global $user, $config, $db, $table_prefix;
 		global $template, $phpbb_root_path, $phpEx;
-		global $request;
+		global $request, $phpbb_container;
 
 		$this->user = $user;
 		$this->db = $db;
-
-		$this->min_name = 10;
-		$this->max_name = 30;
+		$this->helper = $phpbb_container->get('controller.helper');
 
 		if (!defined('RATING_TABLE'))
 		{
@@ -247,7 +245,7 @@ class ucp_rating
 								'TOP_HITS'		=> $row['top_hits'],
 								'TOP_IN'		=> $row['top_in'],
 								'TOP_OUT'		=> $row['top_out'],
-								'TOP_STATS'		=> $phpbb_root_path . 'stats/' . $row['top_id'],
+								'TOP_STATS'		=> $this->helper->route('bb3top_rating_stats', array('top_id' => $row['top_id'])),
 							));
 						}
 						$this->db->sql_freeresult($result);
@@ -478,10 +476,13 @@ class ucp_rating
 									$height = $image_info[1];
 								}
 
+								$c_params = array('action' => $type, 'top_id' => $toprow['top_id']);
+								$u_params = array('top_id' => $toprow['top_id']);
+
 								$template->assign_block_vars('counts', array(
 									'COUNT_TYPE'	=> $name,
-									'COUNT_IMG'		=> generate_board_url() . '/' . $type . '/' . $toprow['top_id'],
-									'COUNT_URL'		=> generate_board_url() . '/in/' . $toprow['top_id'],
+									'COUNT_IMG'		=> $this->helper->route('bb3top_rating_counter', $c_params, false, '', true),
+									'COUNT_URL'		=> $this->helper->route('bb3top_rating_in', $u_params, false, '', true),
 									'COUNT_WIDTH'	=> $width,
 									'COUNT_HEIGHT'	=> $height,
 									'IMAGE_URL'		=> $image_url,
