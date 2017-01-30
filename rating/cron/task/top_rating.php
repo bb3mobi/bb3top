@@ -62,7 +62,8 @@ class top_rating extends \phpbb\cron\task\base
 			`top_in` = 0,
 			`top_out` = 0
 		WHERE `top_id` BETWEEN 1 AND 100000
-			AND top_hosts > 1';
+			AND top_hosts > 0
+			AND top_hosts_before > 0';
 		$this->db->sql_query($sql);
 
 		$this->db->sql_query('TRUNCATE TABLE ' . RATING_CLICK_TABLE);

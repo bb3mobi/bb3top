@@ -51,8 +51,9 @@ class v_1_0_1 extends \phpbb\db\migration\migration
 						'top_time_add'		=> array('TIMESTAMP', 0),
 						'top_type'			=> array('TINT:1', 0),
 					),
-					'PRIMARY_KEY'	=> array('top_id', 'topic_id'),
+					'PRIMARY_KEY'	=> 'top_id',
 					'KEYS'			=> array(
+						'cat_id'	=> array('INDEX', 'cat_id'),
 						'top_hosts'	=> array('INDEX', 'top_hosts'),
 					),
 				),
@@ -91,9 +92,10 @@ class v_1_0_1 extends \phpbb\db\migration\migration
 						'top_prov_id'	=> array('UINT', 0),
 						'top_count'		=> array('UINT', 0),
 					),
-					'PRIMARY_KEY'	=> array('top_time', 'top_ip'),
+					'PRIMARY_KEY'	=> 'top_id',
 					'KEYS'	=> array(
-						'top_id'	=> array('INDEX', 'top_id'),
+						'top_time'	=> array('INDEX', 'top_time'),
+						'top_ip'	=> array('INDEX', 'top_ip'),
 					),
 				),
 				$this->table_prefix . 'rating_online' => array(
@@ -104,9 +106,10 @@ class v_1_0_1 extends \phpbb\db\migration\migration
 						'top_device'	=> array('VCHAR:30', ''),
 						'top_prov_id'	=> array('UINT', 0),
 					),
-					'PRIMARY_KEY'	=> array('top_time', 'top_ip'),
+					'PRIMARY_KEY'	=> 'top_id',
 					'KEYS'	=> array(
-						'top_id'	=> array('INDEX', 'top_id'),
+						'top_time'	=> array('INDEX', 'top_time'),
+						'top_ip'	=> array('INDEX', 'top_ip'),
 					),
 				),
 				$this->table_prefix . 'rating_hits' => array(
@@ -118,9 +121,10 @@ class v_1_0_1 extends \phpbb\db\migration\migration
 						'top_prov_id'	=> array('UINT', 0),
 						'top_count'		=> array('UINT', 0),
 					),
-					'PRIMARY_KEY'	=> array('top_time', 'top_ip'),
+					'PRIMARY_KEY'	=> 'top_id',
 					'KEYS'	=> array(
-						'top_id'	=> array('INDEX', 'top_id'),
+						'top_time'	=> array('INDEX', 'top_time'),
+						'top_ip'	=> array('INDEX', 'top_ip'),
 					),
 				),
 				$this->table_prefix . 'rating_ip' => array(
