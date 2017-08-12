@@ -2,7 +2,7 @@
 
 <h2 class="ucp-title">{L_PLATFORM_MANAGE}</h2>
 
-<div id="tabs">
+<div id="tabs" class="tabs">
 	<ul>
 		<!-- BEGIN t_block1 -->
 		<li class="tab<!-- IF t_block1.S_SELECTED --> activetab<!-- ENDIF -->"><a href="{t_block1.U_TITLE}">{t_block1.L_TITLE}</a></li>
@@ -19,14 +19,14 @@
 
 	<div style="width: 100%;">
 
-	<div id="cp-menu">
-		<div id="navigation" role="navigation">
+	<div id="cp-menu" class="cp-menu">
+		<div id="navigation" class="navigation" role="navigation">
 
 			<ul>
 		<!-- BEGIN t_block2 -->
 			<!-- IF (S_PRIVMSGS and t_block2.S_LAST_ROW) or not S_PRIVMSGS -->
 				<!-- IF t_block2.S_SELECTED -->
-					<li id="active-subsection"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
+					<li id="active-subsection" class="active-subsection"><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
 				<!-- ELSE -->
 					<li><a href="{t_block2.U_TITLE}"><span>{t_block2.L_TITLE}</span></a></li>
 				<!-- ENDIF -->
@@ -48,4 +48,4 @@
 
 	</div>
 
-	<div id="cp-main" class="ucp-main panel-container">
+	<div id="cp-main" class="ucp-main cp-main panel-container">

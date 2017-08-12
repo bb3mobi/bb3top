@@ -3,7 +3,7 @@
 	Rating phpBB 3.1: Anvar Stybaev (http://apwa.ru)
 -->
 
-<div id="cp-main" class="panel-container">
+<div id="cp-main" class="cp-main panel-container">
 
 	<div class="panel bg3">
 		<div class="inner">
@@ -135,9 +135,9 @@
 
 </div>
 
-<div id="cp-menu">
+<div id="cp-menu" class="cp-menu">
 
-	<div id="navigation" role="navigation">
+	<div id="navigation" class="navigation" role="navigation">
 
 		<!-- IF CAT_URL --><div class="cp-mini"><a href="{CAT_URL}" class="forumtitle">{CAT_NAME}</a></div><!-- ENDIF -->
 
@@ -145,15 +145,15 @@
 			<!-- IF TOP_TYPE != 2 -->
 			<h4>{L_TOP_TODAY}</h4>
 			<ul>
-				<li<!-- IF S_STATS_DEFAULT --> id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_DEFAULT}">{L_STATISTICS}</a></li>
+				<li<!-- IF S_STATS_DEFAULT --> class="active-subsection" id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_DEFAULT}">{L_STATISTICS}</a></li>
 				<!-- IF TOP_HOSTS -->
-				<li<!-- IF S_STATS_HOSTS --> id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_HOSTS}">{L_TOP_HOSTS}</a></li><!-- ENDIF -->
+				<li<!-- IF S_STATS_HOSTS --> class="active-subsection" id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_HOSTS}">{L_TOP_HOSTS}</a></li><!-- ENDIF -->
 				<!-- IF TOP_ONLINE -->
-				<li<!-- IF S_STATS_ONLINE --> id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_ONLINE}">{L_TOP_ONLINE} [{TOP_ONLINE}]</a></li><!-- ENDIF -->
+				<li<!-- IF S_STATS_ONLINE --> class="active-subsection" id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_ONLINE}">{L_TOP_ONLINE} [{TOP_ONLINE}]</a></li><!-- ENDIF -->
 				<!-- IF TOP_IN or TOP_OUT -->
-				<li<!-- IF S_STATS_CLICK --> id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_CLICK}">{L_TOP_IN}/{L_TOP_OUT}</a></li><!-- ENDIF -->
+				<li<!-- IF S_STATS_CLICK --> class="active-subsection" id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_CLICK}">{L_TOP_IN}/{L_TOP_OUT}</a></li><!-- ENDIF -->
 				<!-- IF TOP_HOSTS -->
-				<li<!-- IF S_STATS_COUNTRY --> id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_COUNTRY}">{L_TOP_PROVIDERS}</a></li>
+				<li<!-- IF S_STATS_COUNTRY --> class="active-subsection" id="active-subsection"<!-- ENDIF -->><a href="{U_STAT_COUNTRY}">{L_TOP_PROVIDERS}</a></li>
 				<!-- ENDIF -->
 			</ul>
 			<!-- ELSE -->
